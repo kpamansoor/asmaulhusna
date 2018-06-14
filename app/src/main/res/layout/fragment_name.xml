@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    tools:context="com.mansoor.asmaulhusna.activity.MainActivity">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.aniket.floatingtextbutton.MainActivity">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:elevation="10dp"></android.support.v7.widget.RecyclerView>
+    </android.support.constraint.ConstraintLayout>
+
+    <com.aniket.mutativefloatingactionbutton.MutativeFab
+        android:id="@+id/fabScroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:fabBackgroundColor="@android:color/white"
+        app:fabIcon="@drawable/ic_media_play"
+        app:fabText="Scroll"
+        android:layout_marginTop="30dp"
+        app:fabTextColor="@color/colorPrimary" />
+
+
+</android.support.design.widget.CoordinatorLayout>
