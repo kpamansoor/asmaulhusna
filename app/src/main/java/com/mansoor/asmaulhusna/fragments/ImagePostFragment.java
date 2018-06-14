@@ -1,11 +1,14 @@
 package com.mansoor.asmaulhusna.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +16,16 @@ import android.view.ViewGroup;
 import com.mansoor.asmaulhusna.adapters.ImagePostsAdapter;
 import com.mansoor.asmaulhusna.R;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 
 public class ImagePostFragment extends Fragment {
@@ -66,7 +77,8 @@ public class ImagePostFragment extends Fragment {
                 mRecyclerView= view.findViewById(R.id.rv);
         imagesList=new ArrayList<>();
 
-        imagesList.add("https://cdn.pixabay.com/photo/2016/11/26/00/18/car-1859759__340.jpg");
+
+        imagesList.add("https://i.pinimg.com/564x/04/1b/b7/041bb72596a5627555144c301db8e7e3.jpg");
         imagesList.add("https://cdn.pixabay.com/photo/2016/11/18/12/44/wristwatch-1834241__340.jpg");
         imagesList.add("https://cdn.pixabay.com/photo/2015/08/13/17/24/vintage-1950s-887272__340.jpg");
         imagesList.add("https://cdn.pixabay.com/photo/2014/09/03/20/15/legs-434918__340.jpg");
@@ -87,14 +99,80 @@ public class ImagePostFragment extends Fragment {
         imagesList.add("https://cdn.pixabay.com/photo/2015/04/10/00/41/food-715539__340.jpg");
 
 
+        new LoadQuotesTask().execute();
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        namesAdapter=new ImagePostsAdapter(getContext(),imagesList);
-
-        mRecyclerView.setAdapter(namesAdapter);
         return view;
     }
+
+
+        class LoadQuotesTask extends AsyncTask<String, String, Boolean> {
+
+            private ProgressDialog progressDialog = new ProgressDialog(getContext());
+            InputStream inputStream = null;
+            String result = "";
+
+            @Override
+            protected Boolean doInBackground(String... params) {
+
+                String urlLink = "https://raw.githubusercontent.com/kpamansoor/api/master/asmaulhusna/quotes.json";
+
+                try {
+                    if(!urlLink.startsWith("http://") && !urlLink.startsWith("https://"))
+                        urlLink = "http://" + urlLink;
+
+                    URL url = new URL(urlLink);
+                    InputStream inputStream = url.openConnection().getInputStream();
+                    imagesList = new ArrayList<String>(Arrays.asList(getStringFromInputStream(inputStream).split(",")));
+
+                } catch (IOException e) {
+                    Log.e(TAG, "Error", e);
+                }
+                return false;
+            } // protected Void doInBackground(String... params)
+
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                super.onPostExecute(aBoolean);
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                namesAdapter=new ImagePostsAdapter(getContext(),imagesList);
+
+                mRecyclerView.setAdapter(namesAdapter);
+            }
+
+            private String getStringFromInputStream(InputStream is) {
+
+                BufferedReader br = null;
+                StringBuilder sb = new StringBuilder();
+
+                String line;
+                try {
+
+                    br = new BufferedReader(new InputStreamReader(is));
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line);
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (br != null) {
+                        try {
+                            br.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                return sb.toString();
+
+            }
+
+        }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

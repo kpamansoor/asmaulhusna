@@ -9,11 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.mansoor.asmaulhusna.R;
+import com.mansoor.asmaulhusna.fragments.ImageFragment;
 import com.mansoor.asmaulhusna.fragments.ImagePostFragment;
 import com.mansoor.asmaulhusna.fragments.NameDetailsFragment;
 import com.mansoor.asmaulhusna.fragments.NamesFragment;
 
-public class MainActivity extends AppCompatActivity implements NamesFragment.OnFragmentInteractionListener,ImagePostFragment.OnFragmentInteractionListener,NameDetailsFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements NamesFragment.OnFragmentInteractionListener,ImagePostFragment.OnFragmentInteractionListener,NameDetailsFragment.OnFragmentInteractionListener,ImageFragment.OnFragmentInteractionListener {
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -21,14 +22,16 @@ public class MainActivity extends AppCompatActivity implements NamesFragment.OnF
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
                     transaction.replace(R.id.frame_fragment, NamesFragment.newInstance("param1","param2"));
                     transaction.commit();
                     return true;
                 case R.id.navigation_dashboard:
-//                    mTextMessage.setText(R.string.title_dashboard);
+                    transaction.replace(R.id.frame_fragment, ImagePostFragment.newInstance("param1","param2"));
+                    transaction.commit();
                     return true;
                 case R.id.navigation_notifications:
 //                    mTextMessage.setText(R.string.title_notifications);
