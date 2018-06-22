@@ -1,4 +1,4 @@
-package com.mansoor.asmaulhusna.adapters;
+package com.mansoor.asmaulhusna.receivers;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -26,6 +26,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         Intent notificationIntent = new Intent(context, MainActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        notificationIntent.putExtra("target_frag", "names");
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
                 notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -36,7 +37,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationCompat.Builder mNotifyBuilder = new NotificationCompat.Builder(
                 context).setSmallIcon(R.drawable.alarm)
                 .setContentTitle("Asmaul Husna reminder")
-                .setContentText("Recite Asmaul husna, and enlight your day! ").setSound(alarmSound)
+                .setContentText("\uD83D\uDCD6 Recite Asmaul husna, and enlight your day! ").setSound(alarmSound)
                 .setAutoCancel(true).setWhen(when)
                 .setContentIntent(pendingIntent)
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000});

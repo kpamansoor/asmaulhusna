@@ -8,6 +8,7 @@
         android:id="@+id/topSlide"
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:elevation="8dp"
         android:background="@drawable/masjid"
         android:orientation="horizontal"></LinearLayout>
     <LinearLayout
@@ -16,6 +17,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="60dp"
+        android:elevation="8dp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/round_layout">
         <TextView

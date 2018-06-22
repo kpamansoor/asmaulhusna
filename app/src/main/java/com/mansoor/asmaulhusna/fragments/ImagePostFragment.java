@@ -2,17 +2,22 @@ package com.mansoor.asmaulhusna.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.mansoor.asmaulhusna.activity.MyApplication;
 import com.mansoor.asmaulhusna.adapters.ImagePostsAdapter;
 import com.mansoor.asmaulhusna.R;
 
@@ -26,6 +31,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class ImagePostFragment extends Fragment {
@@ -35,16 +41,15 @@ public class ImagePostFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String mParam1,mParam2,localUrls,remortUrls;
     private RecyclerView mRecyclerView;
-
     private ImagePostsAdapter namesAdapter;
-
     private List<String> imagesList;
-
     private OnFragmentInteractionListener mListener;
-
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
+    private MyApplication myapp;
+    private SwipeRefreshLayout mySwipeRefreshLayout;
     public ImagePostFragment() {
         // Required empty public constructor
     }
@@ -75,29 +80,30 @@ public class ImagePostFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_image_post, container, false);
                 mRecyclerView= view.findViewById(R.id.rv);
+                getActivity().setTitle("Quotes");
         imagesList=new ArrayList<>();
+        prefs = getActivity().getSharedPreferences("asmaulhusna", MODE_PRIVATE);
+        editor = getActivity().getSharedPreferences("asmaulhusna", MODE_PRIVATE).edit();
+        localUrls = prefs.getString("quotes_url", null);
+        mySwipeRefreshLayout = view.findViewById(R.id.swiperefresh);
+        mySwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.YELLOW, Color.BLUE);
+        myapp = ((MyApplication) getActivity().getApplicationContext());
+        if(localUrls != null){
+            imagesList = new ArrayList<String>(Arrays.asList(localUrls.split(",")));
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+            namesAdapter=new ImagePostsAdapter(getContext(),imagesList);
 
-        imagesList.add("https://i.pinimg.com/564x/04/1b/b7/041bb72596a5627555144c301db8e7e3.jpg");
-        imagesList.add("https://cdn.pixabay.com/photo/2016/11/18/12/44/wristwatch-1834241__340.jpg");
-        imagesList.add("https://cdn.pixabay.com/photo/2015/08/13/17/24/vintage-1950s-887272__340.jpg");
-        imagesList.add("https://cdn.pixabay.com/photo/2014/09/03/20/15/legs-434918__340.jpg");
-        imagesList.add("https://cdn.pixabay.com/photo/2016/11/22/22/55/buildings-1851047__340.jpg");
-
-
-        imagesList.add("https://cdn.pixabay.com/photo/2014/12/10/10/27/straw-carts-563005__340.jpg");
-        imagesList.add("https://cdn.pixabay.com/photo/2014/07/20/10/40/bottle-397697__340.jpg");
-        imagesList.add("https://cdn.pixabay.com/photo/2014/06/17/02/54/car-370173__340.jpg");
-        imagesList.add("https://cdn.pixabay.com/photo/2015/04/10/00/39/snack-715534__340.jpg");
-        imagesList.add("https://cdn.pixabay.com/photo/2016/08/30/18/45/grilled-1631727__340.jpg");
-
-
-        imagesList.add("https://cdn.pixabay.com/photo/2013/11/21/12/25/orange-214872__340.jpg");
-        imagesList.add("https://cdn.pixabay.com/photo/2016/02/05/15/34/pasta-1181189__340.jpg");
-        imagesList.add("https://cdn.pixabay.com/photo/2014/08/20/23/10/raspberries-422979__340.jpg");
-        imagesList.add("https://cdn.pixabay.com/photo/2015/02/05/05/58/peanut-624601__340.jpg");
-        imagesList.add("https://cdn.pixabay.com/photo/2015/04/10/00/41/food-715539__340.jpg");
-
+            mRecyclerView.setAdapter(namesAdapter);
+        }
+        mySwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        new LoadQuotesTask().execute();
+                    }
+                }
+        );
 
         new LoadQuotesTask().execute();
 
@@ -108,14 +114,17 @@ public class ImagePostFragment extends Fragment {
 
         class LoadQuotesTask extends AsyncTask<String, String, Boolean> {
 
-            private ProgressDialog progressDialog = new ProgressDialog(getContext());
-            InputStream inputStream = null;
-            String result = "";
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                mySwipeRefreshLayout.setRefreshing(true);
+            }
 
             @Override
             protected Boolean doInBackground(String... params) {
 
-                String urlLink = "https://raw.githubusercontent.com/kpamansoor/api/master/asmaulhusna/quotes.json";
+//                String urlLink = "https://raw.githubusercontent.com/kpamansoor/api/master/asmaulhusna/quotes.json";
+                String urlLink = myapp.getQuotesUrl();
 
                 try {
                     if(!urlLink.startsWith("http://") && !urlLink.startsWith("https://"))
@@ -123,7 +132,9 @@ public class ImagePostFragment extends Fragment {
 
                     URL url = new URL(urlLink);
                     InputStream inputStream = url.openConnection().getInputStream();
-                    imagesList = new ArrayList<String>(Arrays.asList(getStringFromInputStream(inputStream).split(",")));
+                    remortUrls = myapp.getStringFromInputStream(inputStream);
+                    imagesList = new ArrayList<String>(Arrays.asList(remortUrls.split(",")));
+
 
                 } catch (IOException e) {
                     Log.e(TAG, "Error", e);
@@ -134,39 +145,23 @@ public class ImagePostFragment extends Fragment {
             @Override
             protected void onPostExecute(Boolean aBoolean) {
                 super.onPostExecute(aBoolean);
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                mySwipeRefreshLayout.setRefreshing(false);
+                if(localUrls == null){
 
-                namesAdapter=new ImagePostsAdapter(getContext(),imagesList);
-
-                mRecyclerView.setAdapter(namesAdapter);
-            }
-
-            private String getStringFromInputStream(InputStream is) {
-
-                BufferedReader br = null;
-                StringBuilder sb = new StringBuilder();
-
-                String line;
-                try {
-
-                    br = new BufferedReader(new InputStreamReader(is));
-                    while ((line = br.readLine()) != null) {
-                        sb.append(line);
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (br != null) {
-                        try {
-                            br.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    namesAdapter=new ImagePostsAdapter(getContext(),imagesList);
+                    mRecyclerView.setAdapter(namesAdapter);
+                    editor.putString("quotes_url", remortUrls);
+                    editor.commit();
                 }
-
-                return sb.toString();
+                else if(localUrls != null && !remortUrls.split(",")[0].equals(localUrls.split(",")[0])) {
+                    mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    namesAdapter=new ImagePostsAdapter(getContext(),imagesList);
+                    mRecyclerView.setAdapter(namesAdapter);
+                    editor.putString("quotes_url", remortUrls);
+                    editor.commit();
+                    Toast.makeText(getActivity(),"QuoteBoard updated with new images!",Toast.LENGTH_LONG).show();
+                }
 
             }
 

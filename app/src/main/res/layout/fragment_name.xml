@@ -8,7 +8,6 @@
     android:clipToPadding="false"
     tools:context="com.mansoor.asmaulhusna.activity.MainActivity">
 
-
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
@@ -34,6 +33,5 @@
         app:fabText="Scroll"
         android:layout_marginTop="30dp"
         app:fabTextColor="@color/colorPrimary" />
-
 
 </android.support.design.widget.CoordinatorLayout>

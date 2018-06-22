@@ -30,7 +30,7 @@ import android.widget.Toast;
 
 import com.aniket.mutativefloatingactionbutton.MutativeFab;
 import com.mansoor.asmaulhusna.R;
-import com.mansoor.asmaulhusna.adapters.AlarmReceiver;
+import com.mansoor.asmaulhusna.receivers.AlarmReceiver;
 import com.mansoor.asmaulhusna.adapters.NameAdapter;
 
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ public class NamesFragment extends Fragment {
     private Menu menu;
     private Timer T;
     private SharedPreferences prefs;
-    SharedPreferences.Editor editor;
+    private SharedPreferences.Editor editor;
     public NamesFragment() {
         // Required empty public constructor
     }
@@ -129,7 +129,7 @@ public class NamesFragment extends Fragment {
         scrollButton.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.fadein));
         nameList =new ArrayList<>();
         mPlayer = MediaPlayer.create(getContext(), R.raw.test);
-
+        getActivity().setTitle("Asmaul Husna");
         prefs = getActivity().getSharedPreferences("asmaulhusna", MODE_PRIVATE);
         editor = getActivity().getSharedPreferences("asmaulhusna", MODE_PRIVATE).edit();
 
@@ -319,6 +319,7 @@ public class NamesFragment extends Fragment {
                 calendar.set(Calendar.MINUTE, selectedMinute);
                 calendar.set(Calendar.SECOND, 0);
                 Intent intent1 = new Intent(getActivity(), AlarmReceiver.class);
+//                intent1.putExtra("target_frag", "names");
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0,intent1, PendingIntent.FLAG_UPDATE_CURRENT);
                 AlarmManager am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
                 am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);

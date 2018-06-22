@@ -87,7 +87,7 @@ public class ImageFragment extends Fragment {
         image= view.findViewById(R.id.image);
         share= view.findViewById(R.id.share);
         download= view.findViewById(R.id.download);
-
+        getActivity().setTitle("Quotes");
         Picasso.with(getContext()).load(mParam1).into(image);
 
         share.setOnClickListener(new View.OnClickListener() {
