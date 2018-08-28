@@ -13,17 +13,34 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.mansoor.asmaulhusna.R;
+import com.mansoor.asmaulhusna.fragments.AllVerseFragment;
+import com.mansoor.asmaulhusna.fragments.ConfigureParyerTimeFragment;
 import com.mansoor.asmaulhusna.fragments.DailyVerseFragment;
+import com.mansoor.asmaulhusna.fragments.DuaFragment;
+import com.mansoor.asmaulhusna.fragments.DuasCardsFragment;
+import com.mansoor.asmaulhusna.fragments.HomeFragment;
 import com.mansoor.asmaulhusna.fragments.ImageFragment;
 import com.mansoor.asmaulhusna.fragments.ImagePostFragment;
 import com.mansoor.asmaulhusna.fragments.NameDetailsFragment;
 import com.mansoor.asmaulhusna.fragments.NamesFragment;
+import com.mansoor.asmaulhusna.fragments.ViewPrayerFragment;
 import com.mansoor.asmaulhusna.receivers.AlarmReceiver;
 import com.mansoor.asmaulhusna.receivers.DailyVerseReceiver;
 
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity implements NamesFragment.OnFragmentInteractionListener,ImagePostFragment.OnFragmentInteractionListener,NameDetailsFragment.OnFragmentInteractionListener,ImageFragment.OnFragmentInteractionListener,DailyVerseFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements
+        HomeFragment.OnFragmentInteractionListener,
+        NamesFragment.OnFragmentInteractionListener,
+        ImagePostFragment.OnFragmentInteractionListener,
+        NameDetailsFragment.OnFragmentInteractionListener,
+        ImageFragment.OnFragmentInteractionListener,
+        DailyVerseFragment.OnFragmentInteractionListener,
+        AllVerseFragment.OnFragmentInteractionListener,
+        DuasCardsFragment.OnFragmentInteractionListener,
+        DuaFragment.OnFragmentInteractionListener,
+        ConfigureParyerTimeFragment.OnFragmentInteractionListener,
+        ViewPrayerFragment.OnFragmentInteractionListener{
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -34,9 +51,10 @@ public class MainActivity extends AppCompatActivity implements NamesFragment.OnF
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    transaction.replace(R.id.frame_fragment, HomeFragment.newInstance("param1","param2"));
+                    transaction.commit();
                     return true;
                 case R.id.allah_names:
-
                     transaction.replace(R.id.frame_fragment, NamesFragment.newInstance("param1","param2"));
                     transaction.commit();
                     return true;
@@ -46,6 +64,10 @@ public class MainActivity extends AppCompatActivity implements NamesFragment.OnF
                     return true;
                 case R.id.navigation_notifications:
                     transaction.replace(R.id.frame_fragment, DailyVerseFragment.newInstance("param1","param2"));
+                    transaction.commit();
+                    return true;
+                case R.id.navigation_dua:
+                    transaction.replace(R.id.frame_fragment, DuasCardsFragment.newInstance("param1","param2"));
                     transaction.commit();
                     return true;
             }
@@ -77,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NamesFragment.OnF
         else if(getIntent().getStringExtra("target_frag") != null && getIntent().getStringExtra("target_frag").equals("daily_verse"))
             transaction.replace(R.id.frame_fragment, DailyVerseFragment.newInstance("param1","param2"));
         else
-            transaction.replace(R.id.frame_fragment, ImagePostFragment.newInstance("param1","param2"));
+            transaction.replace(R.id.frame_fragment, HomeFragment.newInstance("param1","param2"));
         transaction.commit();
 
 //        initiateDailyVerseSechduler();

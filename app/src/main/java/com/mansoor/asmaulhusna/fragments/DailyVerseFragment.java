@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,10 +103,23 @@ public class DailyVerseFragment extends Fragment {
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
             }
         });
+        tvViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(versesCount > 0) {
+                    AppCompatActivity activity = (AppCompatActivity) getActivity();
+                    Fragment myFragment = new AllVerseFragment().newInstance("", "");
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_fragment, myFragment).addToBackStack(null).commit();
+                }
+
+            }
+        });
 
         versesCount = mydb.numberOfVerses();
         if(versesCount > 0)
-            tvViewAll.setText("Click to view other "+versesCount+" verses.");
+            tvViewAll.setText("Click to view all "+versesCount+" verses.");
+        else
+            tvViewAll.setText("Everyday new quran verse will appear here.");
         return view;
     }
 

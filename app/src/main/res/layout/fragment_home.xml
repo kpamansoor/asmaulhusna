@@ -1,0 +1,94 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mansoor.asmaulhusna.fragments.HomeFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:background="@drawable/morning"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="@color/ligh_black"
+                    android:text="16-08-2018" />
+                <TextView
+                    android:id="@+id/tvLocation"
+                    android:textSize="15dp"
+                    android:textColor="@color/ligh_black"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kuala Lumpur" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:layout_alignParentRight="true"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/ligh_black"
+                android:text="02:45 PM"
+                android:padding="10dp"/>
+            <LinearLayout
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tvPrayerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="@color/ligh_black"
+                    android:text="Magrib" />
+                <TextView
+                    android:id="@+id/tvPrayerTime"
+                    android:textSize="40dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/ligh_black"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="06:33 PM" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tvViewAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:layout_alignParentBottom="true"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/ligh_black"
+                android:text="View All"
+                android:padding="10dp"/>
+            <TextView
+                android:id="@+id/tvRemaining"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/ligh_black"
+                android:text="Remaining 01:23"
+                android:padding="10dp"/>
+        </RelativeLayout>
+    </ScrollView>
+
+</FrameLayout>

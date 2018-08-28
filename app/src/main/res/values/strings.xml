@@ -5,7 +5,28 @@
     <string name="title_dashboard">QuoteBoard</string>
     <string name="title_notifications">Questions</string>
     <string name="title_verse">Verse</string>
+    <string name="title_dua">Duas</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="cal_meth_array">
+        <item>0 - Shia Ithna-Ansari</item>
+        <item>1 - University of Islamic Sciences, Karachi</item>
+        <item>2 - Islamic Society of North America</item>
+        <item>3 - Muslim World League</item>
+        <item>4 - Umm Al-Qura University, Makkah </item>
+        <item>5 - Egyptian General Authority of Survey</item>
+        <item>7 - Institute of Geophysics, University of Tehran</item>
+        <item>8 - Gulf Region</item>
+        <item>9 - Kuwait</item>
+        <item>10 - Qatar</item>
+        <item>11 - Majlis Ugama Islam Singapura, Singapore</item>
+        <item>12 - Union Organization islamic de France</item>
+        <item>13 - Diyanet İşleri Başkanlığı, Turkey</item>
+    </string-array>
+    <string-array name="school_array">
+        <item>0 - Shafi</item>
+        <item>1 - Hanafi</item>
+    </string-array>
 </resources>

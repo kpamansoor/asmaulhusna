@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         card_view:cardPreventCornerOverlap="false"
         android:padding="8dp"
-        card_view:cardUseCompatPadding="true">
+        card_view:cardUseCompatPadding="true"
+        card_view:cardCornerRadius="8dp">
 
         <LinearLayout
             android:id="@+id/card"

@@ -18,8 +18,11 @@ public class MyApplication extends Application {
 
     public String QuotesUrl = "https://raw.githubusercontent.com/kpamansoor/api/master/asmaulhusna/quotes.json";
     public String DailyVerseUrl = "http://api.alquran.cloud/ayah/";
+    public String PrayerTimesUrl = "http://api.aladhan.com/v1/calendar?";
 
-
+    public String getPrayerTimesUrl() {
+        return PrayerTimesUrl;
+    }
     public String getDailyVerseUrl() {
         return DailyVerseUrl;
     }
