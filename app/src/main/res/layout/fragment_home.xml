@@ -2,13 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.mansoor.asmaulhusna.fragments.HomeFragment">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <RelativeLayout
-            android:background="@drawable/morning"
+            android:background="@drawable/masjid2"
             android:layout_width="match_parent"
             android:layout_height="200dp">
             <LinearLayout
@@ -20,7 +21,7 @@
                     android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
+                    android:textSize="18dp"
                     android:fontFamily="sans-serif-condensed"
                     android:textColor="@color/ligh_black"
                     android:text="16-08-2018" />
@@ -37,7 +38,7 @@
                 android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:layout_alignParentRight="true"
                 android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/ligh_black"
@@ -55,38 +56,37 @@
                     android:textSize="20dp"
                     android:layout_gravity="center"
                     android:fontFamily="sans-serif-condensed"
-                    android:textColor="@color/ligh_black"
+                    android:textColor="@color/white"
                     android:text="Magrib" />
                 <TextView
                     android:id="@+id/tvPrayerTime"
-                    android:textSize="40dp"
+                    android:textSize="35dp"
+                    android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:textColor="@color/ligh_black"
+                    android:textColor="@color/white"
                     android:fontFamily="sans-serif-condensed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="06:33 PM" />
+                    android:text="--:-- --" />
             </LinearLayout>
             <TextView
                 android:id="@+id/tvViewAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:layout_alignParentBottom="true"
                 android:fontFamily="sans-serif-condensed"
-                android:textColor="@color/ligh_black"
-                android:text="View All"
+                android:textColor="@color/white"
+                android:visibility="gone"
                 android:padding="10dp"/>
-            <TextView
-                android:id="@+id/tvRemaining"
+            <ImageView
+                android:id="@+id/ivShare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:fontFamily="sans-serif-condensed"
-                android:textColor="@color/ligh_black"
-                android:text="Remaining 01:23"
+                app:srcCompat="@drawable/ic_share"
+                android:visibility="gone"
                 android:padding="10dp"/>
         </RelativeLayout>
     </ScrollView>
