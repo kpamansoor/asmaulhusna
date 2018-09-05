@@ -1,5 +1,6 @@
 package com.mansoor.asmaulhusna.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -56,10 +57,11 @@ public class ViewPrayerFragment extends Fragment {
     private Menu menu;
     private SharedPreferences prefs;
     private OnFragmentInteractionListener mListener;
-    private TextView tvDate,tvFajr,tvSunrise,tvDhuhr,tvAsr,tvSunset,tvMaghrib,tvIsha,tvCurrentPrayerName,tvCurrentPrayerTime;
+    private TextView tvDate,tvFajr,tvSunrise,tvDhuhr,tvAsr,tvSunset,tvMaghrib,tvIsha,tvCurrentPrayerName,tvCurrentPrayerTime,hdFajr,hdSunrise,hdDhuhr,hdAsr,hdSunset,hdMaghrib,hdIsha;
     private DBHelper mydb;
     private MyApplication myapp;
     private Date date;
+    private int currenPrayerIndex = 0;
     String currentTime;
     DateFormat dateFormat;
     Prayers prayers;
@@ -109,6 +111,9 @@ public class ViewPrayerFragment extends Fragment {
         tvCurrentPrayerName.setText("Next : "+currentTime.split(",")[0]);
         tvCurrentPrayerTime.setText(currentTime.split(",")[1]);
 
+        currenPrayerIndex = Integer.parseInt(currentTime.split(",")[2]);
+        highlightCurrentPrayer();
+
         leftArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,6 +138,41 @@ public class ViewPrayerFragment extends Fragment {
         return view;
     }
 
+    @SuppressLint("ResourceAsColor")
+    private void highlightCurrentPrayer() {
+        switch (currenPrayerIndex){
+            case 0 :
+                tvFajr.setTextColor(getResources().getColor(R.color.colorPrimary));
+                hdFajr.setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+            case 1 :
+                tvSunrise.setTextColor(getResources().getColor(R.color.colorPrimary));
+                hdSunrise.setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+            case 2 :
+                tvDhuhr.setTextColor(getResources().getColor(R.color.colorPrimary));
+                hdDhuhr.setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+            case 3 :
+                tvAsr.setTextColor(getResources().getColor(R.color.colorPrimary));
+                hdAsr.setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+            case 4 :
+                tvSunset.setTextColor(getResources().getColor(R.color.colorPrimary));
+                hdSunset.setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+            case 5 :
+                tvMaghrib.setTextColor(getResources().getColor(R.color.colorPrimary));
+                hdMaghrib.setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+            case 6 :
+                tvIsha.setTextColor(getResources().getColor(R.color.colorPrimary));
+                hdIsha.setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+            default:
+                break;
+        }
+    }
 
 
     private void initializeVariables(View view) {
@@ -145,6 +185,13 @@ public class ViewPrayerFragment extends Fragment {
         tvSunset = view.findViewById(R.id.tvSunset);
         tvMaghrib = view.findViewById(R.id.tvMaghrib);
         tvIsha = view.findViewById(R.id.tvIsha);
+        hdFajr = view.findViewById(R.id.hdFajr);
+        hdSunrise = view.findViewById(R.id.hdSunrise);
+        hdDhuhr = view.findViewById(R.id.hdDhuhr);
+        hdAsr = view.findViewById(R.id.hdAsr);
+        hdSunset = view.findViewById(R.id.hdSunset);
+        hdMaghrib = view.findViewById(R.id.hdMaghrib);
+        hdIsha = view.findViewById(R.id.hdIsha);
         tvDate = view.findViewById(R.id.tvDate);
         leftArrow = view.findViewById(R.id.leftArrow);
         rightArrow = view.findViewById(R.id.rightArrow);

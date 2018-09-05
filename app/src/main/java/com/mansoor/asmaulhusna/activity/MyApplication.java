@@ -106,6 +106,7 @@ public class MyApplication extends Application {
     public String showCurrentPrayer(Date date, Prayers prayers) {
         int hour = date.getHours();
         int minut = date.getMinutes();
+        int currentIndex = 0;
         double currentTime = Double.parseDouble(hour+"."+minut);
         double min, diff ;
         String nextPrayerName = "",nextPrayerTime = "";
@@ -127,9 +128,10 @@ public class MyApplication extends Application {
                 min = diff;
                 nextPrayerTime = convert24To12(String.valueOf(prayersTimes[i]).replace(".",":"));
                 nextPrayerName = prayersList.get(i);
+                currentIndex = i;
             }
         }
-        return nextPrayerName+","+nextPrayerTime;
+        return nextPrayerName+","+nextPrayerTime+","+currentIndex;
     }
     @Override
     public void onCreate() {

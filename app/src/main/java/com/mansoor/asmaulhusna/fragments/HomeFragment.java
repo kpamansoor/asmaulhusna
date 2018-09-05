@@ -97,7 +97,7 @@ public class HomeFragment extends Fragment {
         prefs = getActivity().getSharedPreferences("asmaulhusna", MODE_PRIVATE);
         tvLocation.setText(prefs.getString("timezone",""));
         myapp = ((MyApplication) getActivity().getApplicationContext());
-        getActivity().setTitle("App name");
+        getActivity().setTitle(myapp.app_name);
         final Handler someHandler = new Handler(getContext().getMainLooper());
         someHandler.postDelayed(new Runnable() {
             @Override
