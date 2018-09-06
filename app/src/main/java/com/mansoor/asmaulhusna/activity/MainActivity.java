@@ -21,6 +21,7 @@ import com.mansoor.asmaulhusna.fragments.DuasCardsFragment;
 import com.mansoor.asmaulhusna.fragments.HomeFragment;
 import com.mansoor.asmaulhusna.fragments.ImageFragment;
 import com.mansoor.asmaulhusna.fragments.ImagePostFragment;
+import com.mansoor.asmaulhusna.fragments.LecturesFragment;
 import com.mansoor.asmaulhusna.fragments.NameDetailsFragment;
 import com.mansoor.asmaulhusna.fragments.NamesFragment;
 import com.mansoor.asmaulhusna.fragments.ViewPrayerFragment;
@@ -40,7 +41,8 @@ public class MainActivity extends AppCompatActivity implements
         DuasCardsFragment.OnFragmentInteractionListener,
         DuaFragment.OnFragmentInteractionListener,
         ConfigureParyerTimeFragment.OnFragmentInteractionListener,
-        ViewPrayerFragment.OnFragmentInteractionListener{
+        ViewPrayerFragment.OnFragmentInteractionListener,
+        LecturesFragment.OnFragmentInteractionListener{
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -69,7 +71,10 @@ public class MainActivity extends AppCompatActivity implements
                 case R.id.navigation_dua:
                     transaction.replace(R.id.frame_fragment, DuasCardsFragment.newInstance("param1","param2"));
                     transaction.commit();
-                    return true;
+//                case R.id.navigation_lecture:
+//                    transaction.replace(R.id.frame_fragment, LecturesFragment.newInstance("param1","param2"));
+//                    transaction.commit();
+//                    return true;
             }
             return false;
         }

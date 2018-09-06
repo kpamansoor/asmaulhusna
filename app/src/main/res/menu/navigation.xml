@@ -18,12 +18,16 @@
 
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/book_open"
+        android:icon="@drawable/ic_book"
         android:title="@string/title_verse" />
 
     <item
         android:id="@+id/navigation_dua"
         android:icon="@drawable/dua"
         android:title="@string/title_dua" />
+    <!--<item-->
+        <!--android:id="@+id/navigation_lecture"-->
+        <!--android:icon="@drawable/ic_teach"-->
+        <!--android:title="@string/title_lec" />-->
 
 </menu>

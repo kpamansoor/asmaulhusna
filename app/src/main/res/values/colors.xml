@@ -12,5 +12,8 @@
     <color name="material_green2">#2e7d32</color>
     <color name="material_orange">#f57c00</color>
     <color name="material_lime">#827717</color>
+    <color name="material_indigo">#1a237e</color>
+    <color name="material_purple">#6a1b9a</color>
+    <color name="material_grey">#37474f</color>
     <color name="ligh_black">#CC000000</color>
 </resources>

@@ -131,7 +131,12 @@ public class MyApplication extends Application {
                 currentIndex = i;
             }
         }
-        return nextPrayerName+","+nextPrayerTime+","+currentIndex;
+        if(nextPrayerTime.equals("")) {
+            nextPrayerTime = convert24To12(String.valueOf(prayersTimes[0]).replace(".",":"));
+            nextPrayerName = prayersList.get(0);
+            return nextPrayerName + "," + nextPrayerTime + "," + currentIndex;
+        }else
+            return nextPrayerName + "," + nextPrayerTime + "," + currentIndex;
     }
     @Override
     public void onCreate() {

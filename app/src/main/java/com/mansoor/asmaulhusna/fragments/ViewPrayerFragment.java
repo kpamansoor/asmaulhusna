@@ -167,7 +167,7 @@ public class ViewPrayerFragment extends Fragment {
                 break;
             case 6 :
                 tvIsha.setTextColor(getResources().getColor(R.color.colorPrimary));
-                hdIsha.setTextColor(getResources().getColor(R.color.colorPrimary));
+                tvIsha.setTextColor(getResources().getColor(R.color.colorPrimary));
                 break;
             default:
                 break;

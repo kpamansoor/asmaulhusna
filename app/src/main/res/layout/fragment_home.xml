@@ -8,6 +8,10 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
         <RelativeLayout
             android:background="@drawable/masjid2"
             android:layout_width="match_parent"
@@ -87,7 +91,22 @@
                 app:srcCompat="@drawable/ic_share"
                 android:visibility="gone"
                 android:padding="10dp"/>
+
         </RelativeLayout>
+            <include
+                android:id="@+id/idItemBlocks"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                layout="@layout/home_screen_itme_blocks"
+                />
+            <include
+                android:id="@+id/idDailyVerse"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_margin="5dp"
+                layout="@layout/verse_single_item"
+            />
+        </LinearLayout>
     </ScrollView>
 
 </FrameLayout>
