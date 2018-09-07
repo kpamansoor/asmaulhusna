@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.mansoor.asmaulhusna.R;
 import com.mansoor.asmaulhusna.fragments.AllVerseFragment;
 import com.mansoor.asmaulhusna.fragments.ConfigureParyerTimeFragment;
@@ -106,7 +108,8 @@ public class MainActivity extends AppCompatActivity implements
         else
             transaction.replace(R.id.frame_fragment, HomeFragment.newInstance("param1","param2"));
         transaction.commit();
-
+        FirebaseApp.initializeApp(this);
+        FirebaseMessaging.getInstance().subscribeToTopic("news");
 //        initiateDailyVerseSechduler();
     }
 

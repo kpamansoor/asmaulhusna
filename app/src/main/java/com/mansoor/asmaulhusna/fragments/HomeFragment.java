@@ -1,5 +1,7 @@
 package com.mansoor.asmaulhusna.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,7 +13,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mansoor.asmaulhusna.R;
@@ -44,12 +48,15 @@ public class HomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private SharedPreferences prefs;
-    private TextView tvTime, tvDate, tvViewAll,tvPrayerName,tvPrayerTime,tvLocation;
+    private SharedPreferences.Editor editor;
+    private TextView tvTime, tvDate, tvViewAll,tvPrayerName,tvPrayerTime,tvLocation,tvNotifTitle,tvNotifMessage;
     private MyApplication myapp;
-    private ImageView ivShare;
+    private ImageView ivShare,ivNotifClose;
     private OnFragmentInteractionListener mListener;
     private DBHelper mydb;
+    LinearLayout layoutNotification;
     Prayers prayers;
+    String notification;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -92,9 +99,14 @@ public class HomeFragment extends Fragment {
         tvPrayerName = view.findViewById(R.id.tvPrayerName);
         tvPrayerTime = view.findViewById(R.id.tvPrayerTime);
         tvLocation = view.findViewById(R.id.tvLocation);
+        tvNotifTitle = view.findViewById(R.id.tvNotifTitle);
+        tvNotifMessage = view.findViewById(R.id.tvNotifMessage);
         ivShare = view.findViewById(R.id.ivShare);
+        ivNotifClose = view.findViewById(R.id.ivNotifClose);
+        layoutNotification = view.findViewById(R.id.layoutNotification);
         tvViewAll.setText("\uD83D\uDD50 VIEW ALL");
         prefs = getActivity().getSharedPreferences("asmaulhusna", MODE_PRIVATE);
+        editor = prefs.edit();
         tvLocation.setText(prefs.getString("timezone",""));
         myapp = ((MyApplication) getActivity().getApplicationContext());
         getActivity().setTitle(myapp.app_name);
@@ -139,12 +151,47 @@ public class HomeFragment extends Fragment {
                         "\nIsha : "+prayers.getIsha().split(" ")[0];
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Ayath of the day.");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                startActivity(Intent.createChooser(sharingIntent, "Share today's prayer times via"));
+            }
+        });
+        ivNotifClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                layoutNotification.animate()
+                        .translationY(0)
+                        .alpha(0.0f)
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                layoutNotification.setVisibility(View.GONE);
+                                editor.putString("lastNotifId",notification.split("###")[2]);
+                                editor.commit();
+                            }
+                        });
             }
         });
 
         checkForPrayerTimeDB();
+        checkForNotification();
         return view;
+    }
+
+    private void checkForNotification() {
+        notification = mydb.getLastNotification();
+
+        if(notification.length() > 0) {
+            if(!prefs.getString("lastNotifId","").equals(notification.split("###")[2])){
+
+                tvNotifTitle.setText(notification.split("###")[0]);
+                tvNotifMessage.setText(notification.split("###")[1]);
+                layoutNotification.setVisibility(View.VISIBLE);
+            }
+            if(prefs.getString("lastNotifId","").equals("")) {
+                editor.putString("lastNotifId",notification.split("###")[2]);
+                editor.commit();
+            }
+        }
     }
 
     private void checkForPrayerTimeDB() {

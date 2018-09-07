@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.BaseColumns;
 
 import com.mansoor.asmaulhusna.models.Prayers;
 import com.mansoor.asmaulhusna.models.Verse;
@@ -19,6 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "MyDBName.db";
     public static final String VERSES_TABLE_NAME = "verses";
     public static final String PRAYER_TABLE_NAME = "prayer";
+    public static final String NOTIF_TABLE_NAME = "notification";
 
     private HashMap hp;
 
@@ -37,6 +39,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 "create table " +PRAYER_TABLE_NAME+
                         "(id integer primary key, date text not null unique,fajr text,sunrise text, dhuhr text,asr text,sunset text,maghrib text, isha text)"
         );
+        db.execSQL(
+                "create table " +NOTIF_TABLE_NAME+
+                        "(id integer primary key, date DATETIME DEFAULT CURRENT_TIMESTAMP,title text,message text)"
+        );
     }
 
     @Override
@@ -44,6 +50,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         db.execSQL("DROP TABLE IF EXISTS "+VERSES_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS "+PRAYER_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+NOTIF_TABLE_NAME);
         onCreate(db);
     }
 
@@ -63,6 +70,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
     }
+
     public boolean insertPrayerTime (String date, String fajr, String sunrise , String  dhuhr , String asr , String sunset , String maghrib , String  isha) {
         try {
             SQLiteDatabase db = this.getWritableDatabase();
@@ -169,5 +177,33 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.delete(VERSES_TABLE_NAME,
                 "id = ? ",
                 new String[] { Integer.toString(id) });
+    }
+
+    public boolean insertNotification (String title, String message) {
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("title", title);
+            contentValues.put("message", message);
+            db.insert(NOTIF_TABLE_NAME, null, contentValues);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
+    }
+
+    public String getLastNotification() {
+        String notification = "";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery( "select * from "+NOTIF_TABLE_NAME+" ORDER BY id DESC LIMIT 1", null );
+
+        if (cursor.moveToLast()) {
+            notification = cursor.getString(2)+"###"+cursor.getString(3)+"###"+cursor.getInt(0);
+        }
+
+        cursor.close();
+        db.close();
+        return notification;
     }
 }

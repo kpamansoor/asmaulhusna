@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "683529549023",
+    "firebase_url": "https://islamic-hub.firebaseio.com",
+    "project_id": "islamic-hub",
+    "storage_bucket": "islamic-hub.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683529549023:android:b56b9a6327a59627",
+        "android_client_info": {
+          "package_name": "com.mansoor.asmaulhusna"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683529549023-b7fhg5vptrr66ri3ioel9h1fev39hv36.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mansoor.asmaulhusna",
+            "certificate_hash": "5020d608f4dde78a3150d1eb371ed913c7ac47a9"
+          }
+        },
+        {
+          "client_id": "683529549023-90kau1qvvrfn3os7tcooi6crim9p90e0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxZcXIyEAF7KlCk_Is7Qs3kq1JL4zMKx8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683529549023-90kau1qvvrfn3os7tcooi6crim9p90e0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
