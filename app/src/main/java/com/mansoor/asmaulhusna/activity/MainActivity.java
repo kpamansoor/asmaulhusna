@@ -26,6 +26,8 @@ import com.mansoor.asmaulhusna.fragments.ImagePostFragment;
 import com.mansoor.asmaulhusna.fragments.LecturesFragment;
 import com.mansoor.asmaulhusna.fragments.NameDetailsFragment;
 import com.mansoor.asmaulhusna.fragments.NamesFragment;
+import com.mansoor.asmaulhusna.fragments.NotificationFragment;
+import com.mansoor.asmaulhusna.fragments.QiblaFragment;
 import com.mansoor.asmaulhusna.fragments.ViewPrayerFragment;
 import com.mansoor.asmaulhusna.receivers.AlarmReceiver;
 import com.mansoor.asmaulhusna.receivers.DailyVerseReceiver;
@@ -44,7 +46,9 @@ public class MainActivity extends AppCompatActivity implements
         DuaFragment.OnFragmentInteractionListener,
         ConfigureParyerTimeFragment.OnFragmentInteractionListener,
         ViewPrayerFragment.OnFragmentInteractionListener,
-        LecturesFragment.OnFragmentInteractionListener{
+        LecturesFragment.OnFragmentInteractionListener,
+        NotificationFragment.OnFragmentInteractionListener,
+        QiblaFragment.OnFragmentInteractionListener{
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener

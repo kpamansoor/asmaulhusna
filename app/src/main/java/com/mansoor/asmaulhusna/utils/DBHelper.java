@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.BaseColumns;
 
+import com.mansoor.asmaulhusna.models.Notification;
 import com.mansoor.asmaulhusna.models.Prayers;
 import com.mansoor.asmaulhusna.models.Verse;
 
@@ -205,5 +205,35 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return notification;
+    }
+
+    public ArrayList<Notification> getAllNotification() {
+        ArrayList<Notification> array_list = new ArrayList<Notification>();
+        Notification notification = null;
+        //hp = new HashMap();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from "+NOTIF_TABLE_NAME+" ORDER BY id DESC", null );
+        res.moveToFirst();
+
+        while(res.isAfterLast() == false){
+            notification =  new Notification();
+            notification.setId(res.getInt(0));
+            notification.setDate(res.getString(1));
+            notification.setTitle(res.getString(2));
+            notification.setMessage(res.getString(3));
+            array_list.add(notification);
+            res.moveToNext();
+        }
+        return array_list;
+    }
+    public Integer deleteNotification (Integer id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(NOTIF_TABLE_NAME,
+                "id = ? ",
+                new String[] { Integer.toString(id) });
+    }
+    public Integer deleteAllNotification () {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(NOTIF_TABLE_NAME,null,null);
     }
 }

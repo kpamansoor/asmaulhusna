@@ -2,6 +2,7 @@ package com.mansoor.asmaulhusna.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,13 +14,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mansoor.asmaulhusna.R;
 import com.mansoor.asmaulhusna.activity.MyApplication;
+import com.mansoor.asmaulhusna.models.Notification;
 import com.mansoor.asmaulhusna.models.Prayers;
 import com.mansoor.asmaulhusna.utils.DBHelper;
 
@@ -54,7 +55,7 @@ public class HomeFragment extends Fragment {
     private ImageView ivShare,ivNotifClose;
     private OnFragmentInteractionListener mListener;
     private DBHelper mydb;
-    LinearLayout layoutNotification;
+    LinearLayout layoutNotificationBlock,layoutAllahNames,layoutQuotes,layoutVerses,layoutDuas,layouNotifications,layouQibla;
     Prayers prayers;
     String notification;
     public HomeFragment() {
@@ -93,17 +94,8 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
-        tvTime = view.findViewById(R.id.tvTime);
-        tvDate = view.findViewById(R.id.tvDate);
-        tvViewAll = view.findViewById(R.id.tvViewAll);
-        tvPrayerName = view.findViewById(R.id.tvPrayerName);
-        tvPrayerTime = view.findViewById(R.id.tvPrayerTime);
-        tvLocation = view.findViewById(R.id.tvLocation);
-        tvNotifTitle = view.findViewById(R.id.tvNotifTitle);
-        tvNotifMessage = view.findViewById(R.id.tvNotifMessage);
-        ivShare = view.findViewById(R.id.ivShare);
-        ivNotifClose = view.findViewById(R.id.ivNotifClose);
-        layoutNotification = view.findViewById(R.id.layoutNotification);
+        initializeVariables(view);
+
         tvViewAll.setText("\uD83D\uDD50 VIEW ALL");
         prefs = getActivity().getSharedPreferences("asmaulhusna", MODE_PRIVATE);
         editor = prefs.edit();
@@ -119,24 +111,8 @@ public class HomeFragment extends Fragment {
                 someHandler.postDelayed(this, 1000);
             }
         }, 10);
-        tvViewAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_fragment, ViewPrayerFragment.newInstance("param1","param2"));
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
-        tvPrayerName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_fragment, ConfigureParyerTimeFragment.newInstance("param1","param2"));
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
+        checkForPrayerTimeDB();
+        checkForNotification();
         ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,14 +133,14 @@ public class HomeFragment extends Fragment {
         ivNotifClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                layoutNotification.animate()
+                layoutNotificationBlock.animate()
                         .translationY(0)
                         .alpha(0.0f)
                         .setListener(new AnimatorListenerAdapter() {
                             @Override
                             public void onAnimationEnd(Animator animation) {
                                 super.onAnimationEnd(animation);
-                                layoutNotification.setVisibility(View.GONE);
+                                layoutNotificationBlock.setVisibility(View.GONE);
                                 editor.putString("lastNotifId",notification.split("###")[2]);
                                 editor.commit();
                             }
@@ -172,9 +148,75 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        checkForPrayerTimeDB();
-        checkForNotification();
+
         return view;
+    }
+
+    private void initializeVariables(View view) {
+        tvTime = view.findViewById(R.id.tvTime);
+        tvDate = view.findViewById(R.id.tvDate);
+        tvViewAll = view.findViewById(R.id.tvViewAll);
+        tvPrayerName = view.findViewById(R.id.tvPrayerName);
+        tvPrayerTime = view.findViewById(R.id.tvPrayerTime);
+        tvLocation = view.findViewById(R.id.tvLocation);
+        tvNotifTitle = view.findViewById(R.id.tvNotifTitle);
+        tvNotifMessage = view.findViewById(R.id.tvNotifMessage);
+        ivShare = view.findViewById(R.id.ivShare);
+        ivNotifClose = view.findViewById(R.id.ivNotifClose);
+        layoutNotificationBlock = view.findViewById(R.id.layoutNotification);
+        layoutAllahNames = view.findViewById(R.id.layoutAllahNames);
+        layoutQuotes = view.findViewById(R.id.layoutQuotes);
+        layoutVerses = view.findViewById(R.id.layoutVerses);
+        layoutDuas = view.findViewById(R.id.layoutDuas);
+        layouNotifications = view.findViewById(R.id.layouNotifications);
+        layouQibla = view.findViewById(R.id.layouQibla);
+
+
+
+        // Create an anonymous implementation of OnClickListener
+        View.OnClickListener mClickListener = new View.OnClickListener() {
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                switch (v.getId() /*to get clicked view id**/) {
+                    case R.id.tvViewAll:
+                        transaction.replace(R.id.frame_fragment, ViewPrayerFragment.newInstance("param1","param2"));
+                        break;
+                    case R.id.tvPrayerName:
+                        transaction.replace(R.id.frame_fragment, ConfigureParyerTimeFragment.newInstance("param1","param2"));
+                        break;
+                    case R.id.layoutAllahNames:
+                        transaction.replace(R.id.frame_fragment, NamesFragment.newInstance("param1","param2"));
+                        break;
+                    case R.id.layoutQuotes:
+                        transaction.replace(R.id.frame_fragment, ImagePostFragment.newInstance("param1","param2"));
+                        break;
+                    case R.id.layoutVerses:
+                        transaction.replace(R.id.frame_fragment, DailyVerseFragment.newInstance("param1","param2"));
+                        break;
+                    case R.id.layoutDuas:
+                        transaction.replace(R.id.frame_fragment, DuasCardsFragment.newInstance("param1","param2"));
+                        break;
+                    case R.id.layouNotifications:
+                        transaction.replace(R.id.frame_fragment, NotificationFragment.newInstance("param1","param2"));
+                        break;
+                    case R.id.layouQibla:
+                        transaction.replace(R.id.frame_fragment, QiblaFragment.newInstance("param1","param2"));
+                        break;
+                    default:
+                        break;
+                }
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        };
+        tvViewAll.setOnClickListener(mClickListener);
+        tvPrayerName.setOnClickListener(mClickListener);
+        layoutAllahNames.setOnClickListener(mClickListener);
+        layoutQuotes.setOnClickListener(mClickListener);
+        layoutVerses.setOnClickListener(mClickListener);
+        layoutDuas.setOnClickListener(mClickListener);
+        layouNotifications.setOnClickListener(mClickListener);
+        layouQibla.setOnClickListener(mClickListener);
     }
 
     private void checkForNotification() {
@@ -185,7 +227,7 @@ public class HomeFragment extends Fragment {
 
                 tvNotifTitle.setText(notification.split("###")[0]);
                 tvNotifMessage.setText(notification.split("###")[1]);
-                layoutNotification.setVisibility(View.VISIBLE);
+                layoutNotificationBlock.setVisibility(View.VISIBLE);
             }
             if(prefs.getString("lastNotifId","").equals("")) {
                 editor.putString("lastNotifId",notification.split("###")[2]);

@@ -11,6 +11,7 @@
             android:layout_height="wrap_content"
             android:weightSum="8">
             <LinearLayout
+                android:id="@+id/layoutAllahNames"
                 android:layout_margin="5dp"
                 android:orientation="vertical"
                 android:layout_width="0dp"
@@ -35,6 +36,7 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/layoutQuotes"
                 android:layout_margin="5dp"
                 android:orientation="vertical"
                 android:layout_width="0dp"
@@ -59,6 +61,7 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/layoutVerses"
                 android:layout_margin="5dp"
                 android:orientation="vertical"
                 android:layout_width="0dp"
@@ -83,6 +86,7 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/layoutDuas"
                 android:layout_margin="5dp"
                 android:orientation="vertical"
                 android:layout_width="0dp"
@@ -140,6 +144,7 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/layouNotifications"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:orientation="vertical"
@@ -153,18 +158,19 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    app:srcCompat="@drawable/ic_share"
+                    app:srcCompat="@drawable/ic_notification"
                     />
                 <TextView
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Names"
+                    android:text="Notification"
                     android:gravity="center"
                     android:textColor="@color/white"/>
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/layouQibla"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:orientation="vertical"
@@ -178,13 +184,13 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    app:srcCompat="@drawable/ic_share"
+                    app:srcCompat="@drawable/ic_cube"
                     />
                 <TextView
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Names"
+                    android:text="Qibla Finder"
                     android:gravity="center"
                     android:textColor="@color/white"/>
 
