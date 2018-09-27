@@ -10,7 +10,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -23,13 +22,13 @@ import com.mansoor.asmaulhusna.fragments.DuasCardsFragment;
 import com.mansoor.asmaulhusna.fragments.HomeFragment;
 import com.mansoor.asmaulhusna.fragments.ImageFragment;
 import com.mansoor.asmaulhusna.fragments.ImagePostFragment;
-import com.mansoor.asmaulhusna.fragments.LecturesFragment;
 import com.mansoor.asmaulhusna.fragments.NameDetailsFragment;
 import com.mansoor.asmaulhusna.fragments.NamesFragment;
 import com.mansoor.asmaulhusna.fragments.NotificationFragment;
 import com.mansoor.asmaulhusna.fragments.QiblaFragment;
+import com.mansoor.asmaulhusna.fragments.QuranFragment;
+import com.mansoor.asmaulhusna.fragments.ReferenceFragment;
 import com.mansoor.asmaulhusna.fragments.ViewPrayerFragment;
-import com.mansoor.asmaulhusna.receivers.AlarmReceiver;
 import com.mansoor.asmaulhusna.receivers.DailyVerseReceiver;
 
 import java.util.Calendar;
@@ -46,8 +45,9 @@ public class MainActivity extends AppCompatActivity implements
         DuaFragment.OnFragmentInteractionListener,
         ConfigureParyerTimeFragment.OnFragmentInteractionListener,
         ViewPrayerFragment.OnFragmentInteractionListener,
-        LecturesFragment.OnFragmentInteractionListener,
+        ReferenceFragment.OnFragmentInteractionListener,
         NotificationFragment.OnFragmentInteractionListener,
+        QuranFragment.OnFragmentInteractionListener,
         QiblaFragment.OnFragmentInteractionListener{
 
 

@@ -119,6 +119,7 @@
             android:layout_height="wrap_content"
             android:weightSum="8">
             <LinearLayout
+                android:id="@+id/layoutReference"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:orientation="vertical"
@@ -132,13 +133,13 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    app:srcCompat="@drawable/ic_teach_white"
+                    app:srcCompat="@drawable/ic_external_white"
                     />
                 <TextView
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Video Lectures"
+                    android:text="External Reference"
                     android:gravity="center"
                     android:textColor="@color/white"/>
 
@@ -196,6 +197,7 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/layoutQuran"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:orientation="vertical"
@@ -209,13 +211,13 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    app:srcCompat="@drawable/ic_share"
+                    app:srcCompat="@drawable/ic_quran"
                     />
                 <TextView
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Names"
+                    android:text="Quran Search"
                     android:gravity="center"
                     android:textColor="@color/white"/>
 

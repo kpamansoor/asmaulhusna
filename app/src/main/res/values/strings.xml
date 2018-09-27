@@ -31,5 +31,7 @@
         <item>0 - Shafi</item>
         <item>1 - Hanafi</item>
     </string-array>
+
+    <string name="about_web">https://www.youtube.com/watch?v=DAWGClMTirQ</string>
 </resources>
 

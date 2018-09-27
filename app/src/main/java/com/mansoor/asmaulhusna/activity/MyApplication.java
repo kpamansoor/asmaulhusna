@@ -29,6 +29,7 @@ public class MyApplication extends Application {
     public String QuotesUrl = "https://raw.githubusercontent.com/kpamansoor/api/master/asmaulhusna/quotes.json";
     public String DailyVerseUrl = "http://api.alquran.cloud/ayah/";
     public String PrayerTimesUrl = "http://api.aladhan.com/v1/calendar?";
+    public String QuranSearchUrl = "http://api.alquran.cloud/search/";
     public List<String> prayersList = new ArrayList<>(Arrays.asList("Fajr","Sunrise","Dhuhr","Asr","Sunset","Maghrib","Isha"));
     public String getPrayerTimesUrl() {
         return PrayerTimesUrl;
@@ -138,6 +139,8 @@ public class MyApplication extends Application {
         }else
             return nextPrayerName + "," + nextPrayerTime + "," + currentIndex;
     }
+
+
     @Override
     public void onCreate() {
         super.onCreate();

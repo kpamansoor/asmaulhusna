@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
     private ImageView ivShare,ivNotifClose;
     private OnFragmentInteractionListener mListener;
     private DBHelper mydb;
-    LinearLayout layoutNotificationBlock,layoutAllahNames,layoutQuotes,layoutVerses,layoutDuas,layouNotifications,layouQibla;
+    LinearLayout layoutNotificationBlock,layoutAllahNames,layoutQuotes,layoutVerses,layoutDuas,layouNotifications,layouQibla,layoutQuran,layoutReference;
     Prayers prayers;
     String notification;
     public HomeFragment() {
@@ -170,6 +170,8 @@ public class HomeFragment extends Fragment {
         layoutDuas = view.findViewById(R.id.layoutDuas);
         layouNotifications = view.findViewById(R.id.layouNotifications);
         layouQibla = view.findViewById(R.id.layouQibla);
+        layoutQuran = view.findViewById(R.id.layoutQuran);
+        layoutReference = view.findViewById(R.id.layoutReference);
 
 
 
@@ -202,6 +204,12 @@ public class HomeFragment extends Fragment {
                     case R.id.layouQibla:
                         transaction.replace(R.id.frame_fragment, QiblaFragment.newInstance("param1","param2"));
                         break;
+                    case R.id.layoutQuran:
+                        transaction.replace(R.id.frame_fragment, QuranFragment.newInstance("param1","param2"));
+                        break;
+                    case R.id.layoutReference:
+                        transaction.replace(R.id.frame_fragment, ReferenceFragment.newInstance("param1","param2"));
+                        break;
                     default:
                         break;
                 }
@@ -217,6 +225,8 @@ public class HomeFragment extends Fragment {
         layoutDuas.setOnClickListener(mClickListener);
         layouNotifications.setOnClickListener(mClickListener);
         layouQibla.setOnClickListener(mClickListener);
+        layoutQuran.setOnClickListener(mClickListener);
+        layoutReference.setOnClickListener(mClickListener);
     }
 
     private void checkForNotification() {
