@@ -6,7 +6,7 @@
         android:title="Play"
         app:showAsAction="always"/>
     <item android:id="@+id/action_reminder"
-        android:icon="@drawable/alarm"
+        android:icon="@drawable/ic_alarm"
         android:title="Reminder"
         app:showAsAction="always"/>
 </menu>

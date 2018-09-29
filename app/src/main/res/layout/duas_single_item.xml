@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     card_view:cardUseCompatPadding="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     card_view:cardCornerRadius="5dp">
 
 
@@ -47,7 +48,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="right"
-                        android:src="@drawable/share_green" />
+                        app:srcCompat="@drawable/ic_share_green" />
 
             </LinearLayout>
 

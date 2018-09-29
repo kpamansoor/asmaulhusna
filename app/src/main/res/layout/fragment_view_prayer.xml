@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,6 +17,7 @@
             android:background="@drawable/masjid"
             android:padding="15dp">
             <TextView
+                android:id="@+id/tvCurrentPrayerName"
                 android:gravity="center"
                 android:text="Maghrib"
                 android:textSize="15dp"
@@ -24,6 +26,7 @@
                 android:textColor="@color/white"
                 android:fontFamily="sans-serif-condensed"/>
             <TextView
+                android:id="@+id/tvCurrentPrayerTime"
                 android:gravity="center"
                 android:text="06:30 PM"
                 android:textStyle="bold"
@@ -51,12 +54,12 @@
                 android:padding="3dp"
                 android:weightSum="10">
                 <TextView
+                    android:id="@+id/hdFajr"
                     android:text="Fajr"
                     android:textSize="20dp"
                     android:layout_width="0dp"
                     android:layout_weight="5"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
                     android:fontFamily="sans-serif-condensed"/>
                 <TextView
                     android:id="@+id/tvFajr"
@@ -66,7 +69,6 @@
                     android:layout_width="0dp"
                     android:layout_weight="4"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
                     android:fontFamily="sans-serif-condensed"/>
                 <ImageView
                     android:id="@+id/imgFajr"
@@ -87,12 +89,12 @@
             android:padding="3dp"
             android:weightSum="10">
             <TextView
+                android:id="@+id/hdSunrise"
                 android:text="Sunrise"
                 android:textSize="20dp"
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
                 android:fontFamily="sans-serif-condensed"/>
             <TextView
                 android:id="@+id/tvSunrise"
@@ -102,7 +104,6 @@
                 android:layout_width="0dp"
                 android:layout_weight="4"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
                 android:fontFamily="sans-serif-condensed"/>
             <ImageView
                 android:id="@+id/imgSunrise"
@@ -123,12 +124,12 @@
             android:padding="3dp"
             android:weightSum="10">
             <TextView
+                android:id="@+id/hdDhuhr"
                 android:text="Dhuhr"
                 android:textSize="20dp"
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
                 android:fontFamily="sans-serif-condensed"/>
             <TextView
                 android:id="@+id/tvDhuhr"
@@ -138,7 +139,6 @@
                 android:layout_width="0dp"
                 android:layout_weight="4"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
                 android:fontFamily="sans-serif-condensed"/>
             <ImageView
                 android:id="@+id/imgDhuhr"
@@ -159,12 +159,12 @@
             android:padding="3dp"
             android:weightSum="10">
             <TextView
+                android:id="@+id/hdAsr"
                 android:text="Asr"
                 android:textSize="20dp"
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
                 android:fontFamily="sans-serif-condensed"/>
             <TextView
                 android:id="@+id/tvAsr"
@@ -174,7 +174,6 @@
                 android:layout_width="0dp"
                 android:layout_weight="4"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
                 android:fontFamily="sans-serif-condensed"/>
             <ImageView
                 android:id="@+id/imgAsr"
@@ -195,12 +194,12 @@
             android:padding="3dp"
             android:weightSum="10">
             <TextView
+                android:id="@+id/hdSunset"
                 android:text="Sunset"
                 android:textSize="20dp"
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
                 android:fontFamily="sans-serif-condensed"/>
             <TextView
                 android:id="@+id/tvSunset"
@@ -210,7 +209,6 @@
                 android:layout_width="0dp"
                 android:layout_weight="4"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
                 android:fontFamily="sans-serif-condensed"/>
             <ImageView
                 android:id="@+id/imgSunset"
@@ -231,12 +229,12 @@
             android:padding="3dp"
             android:weightSum="10">
             <TextView
+                android:id="@+id/hdMaghrib"
                 android:text="Maghrib"
                 android:textSize="20dp"
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
                 android:fontFamily="sans-serif-condensed"/>
             <TextView
                 android:id="@+id/tvMaghrib"
@@ -246,7 +244,6 @@
                 android:layout_width="0dp"
                 android:layout_weight="4"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
                 android:fontFamily="sans-serif-condensed"/>
             <ImageView
                 android:id="@+id/imgMaghrib"
@@ -267,12 +264,12 @@
             android:padding="3dp"
             android:weightSum="10">
             <TextView
+                android:id="@+id/hdIsha"
                 android:text="Isha"
                 android:textSize="20dp"
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
                 android:fontFamily="sans-serif-condensed"/>
             <TextView
                 android:id="@+id/tvIsha"
@@ -282,7 +279,6 @@
                 android:layout_width="0dp"
                 android:layout_weight="4"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
                 android:fontFamily="sans-serif-condensed"/>
             <ImageView
                 android:id="@+id/imgIsha"
@@ -290,7 +286,7 @@
                 android:layout_weight="1"
                 android:padding="2dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/share_green"/>
+                app:srcCompat="@drawable/ic_share_green"/>
         </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -303,10 +299,12 @@
         android:padding="5dp"
         android:background="@color/colorPrimary">
         <ImageView
+            android:id="@+id/leftArrow"
             android:layout_width="0dp"
             android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:src="@drawable/left"/>
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/ic_left"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -334,10 +332,12 @@
                 android:fontFamily="sans-serif-condensed"/>
         </LinearLayout>
         <ImageView
+            android:id="@+id/rightArrow"
             android:layout_width="0dp"
             android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:src="@drawable/right"/>
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/ic_right"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.QuranFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:padding="5dp"
+        android:textSize="15dp"
+        android:layout_margin="5dp"
+        android:drawableRight="@drawable/ic_close"
+        android:background="@drawable/curved_boarder"
+        android:hint="Search in quran" />
+    <com.tuyenmonkey.mkloader.MKLoader
+        android:id="@+id/loader"
+        android:layout_below="@+id/etSearch"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:mk_type="Whirlpool"
+        app:mk_color="@color/colorPrimary"
+        />
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_below="@+id/loader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:visibility="gone"
+        android:text="Showing 0 results"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_below="@+id/tvResult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:elevation="10dp"></android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

@@ -10,8 +10,9 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.mansoor.asmaulhusna.R;
 import com.mansoor.asmaulhusna.fragments.AllVerseFragment;
 import com.mansoor.asmaulhusna.fragments.ConfigureParyerTimeFragment;
@@ -23,8 +24,11 @@ import com.mansoor.asmaulhusna.fragments.ImageFragment;
 import com.mansoor.asmaulhusna.fragments.ImagePostFragment;
 import com.mansoor.asmaulhusna.fragments.NameDetailsFragment;
 import com.mansoor.asmaulhusna.fragments.NamesFragment;
+import com.mansoor.asmaulhusna.fragments.NotificationFragment;
+import com.mansoor.asmaulhusna.fragments.QiblaFragment;
+import com.mansoor.asmaulhusna.fragments.QuranFragment;
+import com.mansoor.asmaulhusna.fragments.ReferenceFragment;
 import com.mansoor.asmaulhusna.fragments.ViewPrayerFragment;
-import com.mansoor.asmaulhusna.receivers.AlarmReceiver;
 import com.mansoor.asmaulhusna.receivers.DailyVerseReceiver;
 
 import java.util.Calendar;
@@ -40,7 +44,11 @@ public class MainActivity extends AppCompatActivity implements
         DuasCardsFragment.OnFragmentInteractionListener,
         DuaFragment.OnFragmentInteractionListener,
         ConfigureParyerTimeFragment.OnFragmentInteractionListener,
-        ViewPrayerFragment.OnFragmentInteractionListener{
+        ViewPrayerFragment.OnFragmentInteractionListener,
+        ReferenceFragment.OnFragmentInteractionListener,
+        NotificationFragment.OnFragmentInteractionListener,
+        QuranFragment.OnFragmentInteractionListener,
+        QiblaFragment.OnFragmentInteractionListener{
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -69,7 +77,10 @@ public class MainActivity extends AppCompatActivity implements
                 case R.id.navigation_dua:
                     transaction.replace(R.id.frame_fragment, DuasCardsFragment.newInstance("param1","param2"));
                     transaction.commit();
-                    return true;
+//                case R.id.navigation_lecture:
+//                    transaction.replace(R.id.frame_fragment, LecturesFragment.newInstance("param1","param2"));
+//                    transaction.commit();
+//                    return true;
             }
             return false;
         }
@@ -101,7 +112,8 @@ public class MainActivity extends AppCompatActivity implements
         else
             transaction.replace(R.id.frame_fragment, HomeFragment.newInstance("param1","param2"));
         transaction.commit();
-
+        FirebaseApp.initializeApp(this);
+        FirebaseMessaging.getInstance().subscribeToTopic("news");
 //        initiateDailyVerseSechduler();
     }
 

@@ -1,19 +1,29 @@
 package com.mansoor.asmaulhusna.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mansoor.asmaulhusna.R;
 import com.google.android.gms.plus.PlusOneButton;
+import com.mansoor.asmaulhusna.activity.MyApplication;
 import com.mansoor.asmaulhusna.models.Prayers;
 import com.mansoor.asmaulhusna.utils.DBHelper;
 
@@ -44,10 +54,18 @@ public class ViewPrayerFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Menu menu;
     private SharedPreferences prefs;
     private OnFragmentInteractionListener mListener;
-    private TextView tvDate,tvFajr,tvSunrise,tvDhuhr,tvAsr,tvSunset,tvMaghrib,tvIsha;
+    private TextView tvDate,tvFajr,tvSunrise,tvDhuhr,tvAsr,tvSunset,tvMaghrib,tvIsha,tvCurrentPrayerName,tvCurrentPrayerTime,hdFajr,hdSunrise,hdDhuhr,hdAsr,hdSunset,hdMaghrib,hdIsha;
     private DBHelper mydb;
+    private MyApplication myapp;
+    private Date date;
+    private int currenPrayerIndex = 0;
+    String currentTime;
+    DateFormat dateFormat;
+    Prayers prayers;
+    ImageView leftArrow,rightArrow;
     public ViewPrayerFragment() {
         // Required empty public constructor
     }
@@ -73,6 +91,7 @@ public class ViewPrayerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -83,6 +102,80 @@ public class ViewPrayerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_view_prayer, container, false);
+
+        initializeVariables(view);
+
+        showTimes();
+
+        currentTime = myapp.showCurrentPrayer(date,prayers);
+        tvCurrentPrayerName.setText("Next : "+currentTime.split(",")[0]);
+        tvCurrentPrayerTime.setText(currentTime.split(",")[1]);
+
+        currenPrayerIndex = Integer.parseInt(currentTime.split(",")[2]);
+        highlightCurrentPrayer();
+
+        leftArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(prayers != null) {
+                    date = myapp.addDays(date, -1);
+                    showTimes();
+                }
+            }
+        });
+
+        rightArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(prayers != null) {
+                    date = myapp.addDays(date, 1);
+                    showTimes();
+                }
+            }
+        });
+
+
+        return view;
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private void highlightCurrentPrayer() {
+        switch (currenPrayerIndex){
+            case 0 :
+                tvFajr.setTextColor(getResources().getColor(R.color.colorPrimary));
+                hdFajr.setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+            case 1 :
+                tvSunrise.setTextColor(getResources().getColor(R.color.colorPrimary));
+                hdSunrise.setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+            case 2 :
+                tvDhuhr.setTextColor(getResources().getColor(R.color.colorPrimary));
+                hdDhuhr.setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+            case 3 :
+                tvAsr.setTextColor(getResources().getColor(R.color.colorPrimary));
+                hdAsr.setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+            case 4 :
+                tvSunset.setTextColor(getResources().getColor(R.color.colorPrimary));
+                hdSunset.setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+            case 5 :
+                tvMaghrib.setTextColor(getResources().getColor(R.color.colorPrimary));
+                hdMaghrib.setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+            case 6 :
+                tvIsha.setTextColor(getResources().getColor(R.color.colorPrimary));
+                tvIsha.setTextColor(getResources().getColor(R.color.colorPrimary));
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    private void initializeVariables(View view) {
         getActivity().setTitle("Prayer times");
         prefs = getActivity().getSharedPreferences("asmaulhusna", MODE_PRIVATE);
         tvFajr = view.findViewById(R.id.tvFajr);
@@ -92,41 +185,81 @@ public class ViewPrayerFragment extends Fragment {
         tvSunset = view.findViewById(R.id.tvSunset);
         tvMaghrib = view.findViewById(R.id.tvMaghrib);
         tvIsha = view.findViewById(R.id.tvIsha);
+        hdFajr = view.findViewById(R.id.hdFajr);
+        hdSunrise = view.findViewById(R.id.hdSunrise);
+        hdDhuhr = view.findViewById(R.id.hdDhuhr);
+        hdAsr = view.findViewById(R.id.hdAsr);
+        hdSunset = view.findViewById(R.id.hdSunset);
+        hdMaghrib = view.findViewById(R.id.hdMaghrib);
+        hdIsha = view.findViewById(R.id.hdIsha);
         tvDate = view.findViewById(R.id.tvDate);
-
+        leftArrow = view.findViewById(R.id.leftArrow);
+        rightArrow = view.findViewById(R.id.rightArrow);
+        tvCurrentPrayerName = view.findViewById(R.id.tvCurrentPrayerName);
+        tvCurrentPrayerTime = view.findViewById(R.id.tvCurrentPrayerTime);
+        myapp = ((MyApplication) getActivity().getApplicationContext());
         // Getting current date
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Date date = new Date();
-        tvDate.setText(dataToText(dateFormat.format(date)));
-        mydb = new DBHelper(getActivity());
-        Prayers prayers = mydb.getPrayerTimes(dateFormat.format(date));
-        tvFajr.setText(prayers.getFajr());
-
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(prefs.getString("timezone",""));
-        return view;
+        dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        date = new Date();
     }
 
-    private String dataToText(String text) {
-//        String text = "2015-01-17";
-        try {
-            SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
-            SimpleDateFormat sdf2 = new SimpleDateFormat("dd MMM yyyy");
+    private void showTimes() {
 
-            Date date = sdf1.parse(text);
+        tvDate.setText(myapp.dataToText(dateFormat.format(date)));
+        mydb = new DBHelper(getActivity());
+        prayers = mydb.getPrayerTimes(dateFormat.format(date));
 
-            return sdf2.format(date);
-        } catch (ParseException exp) {
-            exp.printStackTrace();
+        if(prayers != null) {
+            tvFajr.setText("\uD83D\uDD4C" + myapp.convert24To12(prayers.getFajr().split(" ")[0]));
+            tvSunrise.setText("\uD83C\uDF05" + myapp.convert24To12(prayers.getSunrise().split(" ")[0]));
+            tvDhuhr.setText("\uD83D\uDD4C" + myapp.convert24To12(prayers.getDhuhr().split(" ")[0]));
+            tvAsr.setText("\uD83D\uDD4C" + myapp.convert24To12(prayers.getAsr().split(" ")[0]));
+            tvSunset.setText("\uD83C\uDF05" + myapp.convert24To12(prayers.getSunset().split(" ")[0]));
+            tvMaghrib.setText("\uD83D\uDD4C" + myapp.convert24To12(prayers.getMaghrib().split(" ")[0]));
+            tvIsha.setText("\uD83D\uDD4C" + myapp.convert24To12(prayers.getIsha().split(" ")[0]));
         }
+    }
 
-        return text;
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_view_prayer, menu);
+        this.menu = menu;
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_configure:
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_fragment, ConfigureParyerTimeFragment.newInstance("param1","param2"));
+                transaction.addToBackStack(null);
+                transaction.commit();
+                return true;
+            case R.id.action_share:
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = myapp.app_name+": Prayer timing\nFajr : "+prayers.getFajr()+
+                        "\nSunrise : "+prayers.getSunrise().split(" ")[0]+
+                        "\nDhuhr : "+prayers.getDhuhr().split(" ")[0]+
+                        "\nAsr : "+prayers.getAsr().split(" ")[0]+
+                        "\nSunset : "+prayers.getSunset().split(" ")[0]+
+                        "\nMaghrib : "+prayers.getMaghrib().split(" ")[0]+
+                        "\nIsha : "+prayers.getIsha().split(" ")[0];
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Ayath of the day.");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(prefs.getString("timezone",""));
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -148,9 +281,16 @@ public class ViewPrayerFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("");
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+
     }
 
     /**
