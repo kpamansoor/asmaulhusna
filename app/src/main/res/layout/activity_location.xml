@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.LocationActivity"
+    android:gravity="center">
+    <TextView
+        android:id="@+id/salam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Assalamu Alaikum"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="-80dp"
+        android:textSize="30dp"/>
+    <ImageView
+        android:id="@+id/image"
+        android:layout_below="@+id/salam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_location"
+        android:layout_marginTop="50dp"
+        android:foregroundGravity="center"
+        />
+    <TextView
+        android:id="@+id/text"
+        android:layout_below="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="The app need your location to \n calculate accurate prayer times"
+        android:textSize="15dp"/>
+    <Button
+        android:id="@+id/btnConfigureTime"
+        android:layout_margin="25dp"
+        android:layout_below="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:background="@drawable/boarder_curved_blank"
+        android:text="Locate Me"/>
+
+</RelativeLayout>
